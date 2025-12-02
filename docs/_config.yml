@@ -18,16 +18,17 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Ieuan Higgs's Blog
-email: i.higgs@example.com
+title: Dr Ieuan Higgs
+email: i.c.higgs@reading.ac.uk
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Welcome to the homepage for Dr Ieuan Higgs, who currently works as a
+  lecturer and researcher in the University of Reading Computer Science Department.
+  My research interests include: machine learning, data assimilation and
+  explainable AI, with a focus on their application to Earth systems.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: sci_higgs
-github_username:  higgsboyo
+github_username:  ichiggs
 
 # Build settings
 theme: minima
