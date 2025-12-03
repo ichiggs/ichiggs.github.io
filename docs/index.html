@@ -7,7 +7,7 @@
 
   <style>
     :root{
-      --bg-1: #0b1220;
+      --bg-1: #204286;
       --bg-2: #05070d;
       --header-h: 128px;
       --accent: #d9e2ff;
@@ -209,7 +209,7 @@
       <div class="dropdown">
         <a id="dropdownToggle">Demos ▾</a>
         <div class="menu" id="dropdownMenu">
-          <a href="#globe-demo">Globe Visualisation</a>
+          <a href="lorenz">Lorenz '63 Viz</a>
           <a href="#assimilation">AI Assimilation</a>
           <a href="#xai">Explainable AI</a>
         </div>
@@ -276,7 +276,7 @@
       .attr('cx', viewBoxSize / 2)
       .attr('cy', viewBoxSize / 2)
       .attr('r', projection.scale())
-      .attr('fill', '#021323');
+      .attr('fill', '#092e6e'); //#021323
 
     const graticule = d3.geoGraticule10();
     g.append('path')
@@ -288,7 +288,8 @@
 
     const countriesG = g.append('g').attr('class','countries');
 
-    function randomRed(){ return `rgb(${160+Math.random()*95},${Math.random()*100},${Math.random()*100})`; }
+    //function randomRed(){ return `rgb(${160+Math.random()*95},${Math.random()*100},${Math.random()*100})`; }
+    function randomRed(){ return `rgb(${20+Math.random()*50},${120+Math.random()*60},${10+Math.random()*40})`; }
 
     d3.json('countries-110m.json').then(world=>{
       const land = topojson.feature(world, world.objects.countries);
