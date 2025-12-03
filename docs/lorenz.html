@@ -3,143 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <title>Lorenz Attractor Ensemble Demo</title>
+
+<!-- Shared site-wide theme (background, fonts, etc.) -->
+<link rel="stylesheet" href="/style.css">
+
+<!-- Header styles (same as homepage header) -->
+<link rel="stylesheet" href="/assets/css/header.css">
+
+<!-- Math + polyfills -->
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
-<style>
-  body { margin: 0; background: black; color: #eeeeee; font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; }
-  
-  /* Header */
-  #header {
-    padding: 20px;
-    background: rgba(0,0,0,0.85);
-    text-align: center;
-    max-width: 840px;
-    margin: 0 auto;
-  }
-  #header h1 { margin: 0 0 10px 0; font-size: 2em; }
-  #header p { margin: 5px 0; font-size: 1em; line-height: 1.5; }
 
-  /* Buttons */
+<!-- Page-specific styling -->
+<style>
+  /* Make sure content starts below fixed header */
+  .page-content {
+    padding-top: var(--header-h);
+    width: 100%;
+  }
+
+  /* Side-by-side layout */
+  .lorenz-layout {
+      display: flex;
+      gap: 32px;
+      width: 100%;
+      max-width: none;   /* remove any limit */
+      padding: 44px 40px; /* small padding on sides */
+      box-sizing: border-box;
+  }
+
+
+  .lorenz-left {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #lorenz-header {
+    margin-bottom: 16px;
+  }
+
+  #lorenz-header h1 {
+    font-size: 1.6rem;
+    margin-top: 0;
+  }
+
   #buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    padding: 10px 0;
-    background: rgba(0,0,0,0.85);
+    gap: 12px;
+    margin-top: 8px;
   }
-  #buttons button { font-size: 1em; padding: 8px 12px; cursor: pointer; }
 
-  /* Name */
+  #buttons button {
+    padding: 8px 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  .lorenz-right {
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #canvas-container {
+    flex: 1;
+    min-height: 500px;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
   #footer {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    color: #cccccc;
+    background: rgba(0,0,0,0.4);
+    padding: 6px 10px;
+    border-radius: 6px;
     font-size: 0.9em;
-    background: rgba(0,0,0,0.5);
-    padding: 4px 8px;
-    border-radius: 4px;
-    z-index: 20;
   }
 
-  /* Canvas */
-  #canvas-container { flex: 1; position: relative; }
-  canvas { width: 100%; height: 100%; display: block; }
+  /* Stack on small screens */
+  @media (max-width: 900px) {
+    .lorenz-layout {
+      flex-direction: column;
+    }
+    .lorenz-left, .lorenz-right {
+      flex: 1 1 auto;
+    }
+    #buttons {
+      justify-content: flex-start;
+    }
+  }
 </style>
 </head>
+
 <body>
 
-<div id="header">
-  <h1>Computational Chaos: The Lorenz '63 Attractor</h1>
-  <p>The Lorenz system is a set of simple equations that can create surprisingly complex and unpredictable patterns:</p>
-  <p>
-    $$\begin{aligned}
-    \dot{x} &= \sigma (y - x) \\
-    \dot{y} &= x(\rho - z) - y \\
-    \dot{z} &= xy - \beta z
-    \end{aligned}$$
-  </p>
-  <p>Tiny differences in where you start can lead to wildly different results - this is often referred to as the “butterfly effect.”</p>
+<!-- Header gets injected here from /header.html -->
+<div id="header-container"></div>
 
-  <p><b>Reset</b> and watch how these tiny differences can grow into large differences over time!</p>
-</div>
+<div class="page-content">
+  <div class="lorenz-layout">
 
-<div id="buttons">
-  <button id="resetBtn">Reset</button>
-  <button id="rotateBtn">Rotate</button>
-</div>
+    <!-- LEFT: text + buttons -->
+    <div class="lorenz-left">
+      <div id="lorenz-header">
+        <h1>Computational Chaos:<br>The Lorenz '63 Attractor</h1>
+        <p>The Lorenz system is a set of simple equations that can create surprisingly complex and unpredictable patterns:</p>
 
+        <p>
+          $$\begin{aligned}
+          \dot{x} &= \sigma (y - x) \\
+          \dot{y} &= x(\rho - z) - y \\
+          \dot{z} &= xy - \beta z
+          \end{aligned}$$
+        </p>
 
-<div id="canvas-container">
-  <canvas id="canvas"></canvas>
-</div>
+        <p>Tiny differences in where you start can lead to wildly different results – the “butterfly effect.”</p>
 
-<div id="header">
- <p>By simulating chaotic systems and analysing them with algorithms, we can uncover hidden patterns, gain new insights, and develop techniques for real-world challenges like predicting the weather!</p>
-</div>
+        <p><b>Reset</b> to see how small changes grow into chaos!</p>
+      </div>
 
-<div id="footer">Created by Dr. Ieuan Higgs (UoR:CS)</div>
+      <div id="buttons">
+        <button id="resetBtn">Reset</button>
+        <button id="rotateBtn">Rotate</button>
+      </div>
+    </div>
 
+    <!-- RIGHT: canvas animation -->
+    <div class="lorenz-right">
+      <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="footer">Created by Dr. Ieuan Higgs (UoR:CS)</div>
+</div><!-- /page-content -->
+
+<!-- Lorenz JS (unchanged except layout-agnostic sizing) -->
 <script>
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
     canvas.width = canvas.parentElement.clientWidth;
-    canvas.height = canvas.parentElement.clientHeight*0.8;
+    canvas.height = canvas.parentElement.clientHeight;
 }
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-const width = canvas.width;
-const height = canvas.height;
-
-// Lorenz parameters
-const sigma = 10, rho = 28, beta = 8/3;
-const dt = 0.01;
-
-// Ensemble
-const numMembers = 20;
+const sigma = 10, rho = 28, beta = 8/3, dt = 0.01;
+const numMembers = 20, tailLength = 50;
 const members = [];
-const tailLength = 50;
 
-// Initialize members
-for(let i = 0; i < numMembers; i++) {
+for (let i = 0; i < numMembers; i++) {
     members.push({
-        x: Math.random()*10 - 5,
-        y: Math.random()*10 - 5,
-        z: Math.random()*10 - 5,
+        x: Math.random() * 10 - 5,
+        y: Math.random() * 10 - 5,
+        z: Math.random() * 10 - 5,
         tail: []
     });
 }
 
-// Lorenz integration (Euler)
-function lorenzStep(member) {
-    const {x, y, z} = member;
-    const dx = sigma*(y - x) * dt;
-    const dy = (x*(rho - z) - y) * dt;
-    const dz = (x*y - beta*z) * dt;
-    member.x += dx;
-    member.y += dy;
-    member.z += dz;
+function lorenzStep(m) {
+    const dx = sigma * (m.y - m.x) * dt;
+    const dy = (m.x * (rho - m.z) - m.y) * dt;
+    const dz = (m.x * m.y - beta * m.z) * dt;
+    m.x += dx; m.y += dy; m.z += dz;
 
-    member.tail.push({x: member.x, y: member.y, z: member.z});
-    if(member.tail.length > tailLength) member.tail.shift();
+    m.tail.push({x: m.x, y: m.y, z: m.z});
+    if (m.tail.length > tailLength) m.tail.shift();
 }
 
-// Rotation state
-let rotate = false;
-let angle = 0;
-
-// Buttons
+let rotate = false, angle = 0;
 document.getElementById('rotateBtn').onclick = () => rotate = !rotate;
 
 document.getElementById('resetBtn').onclick = () => {
-    const leader = members[0];
-    const epsilon = 0.05;
-    for(let i = 1; i < numMembers; i++) {
+    const leader = members[0], epsilon = 0.05;
+    for (let i = 1; i < numMembers; i++) {
         members[i].x = leader.x + (Math.random()*2 - 1)*epsilon;
         members[i].y = leader.y + (Math.random()*2 - 1)*epsilon;
         members[i].z = leader.z + (Math.random()*2 - 1)*epsilon;
@@ -147,36 +200,39 @@ document.getElementById('resetBtn').onclick = () => {
     }
 };
 
-// Projection with optional rotation
 function project(x, y, z) {
-    const scale = 9;
-    if(rotate) {
-        const cosA = Math.cos(angle);
-        const sinA = Math.sin(angle);
-        const xr = x * cosA - y * sinA;
-        const yr = x * sinA + y * cosA;
-        return { x: canvas.width/2 + scale*xr*1.5, y: canvas.height*0.8 - scale*z + scale*10};
-    } else {
-        return { x: canvas.width/2 + scale*x*1.5, y: canvas.height*0.8 - scale*z + scale*10};
+    const s = 9;
+    if (rotate) {
+        const c = Math.cos(angle), sA = Math.sin(angle);
+        const xr = x * c - y * sA;
+        const yr = x * sA + y * c;
+        return {
+          x: canvas.width / 2 + 1.5 * s * xr,
+          y: canvas.height * 0.8 - s * z + s * 10
+        };
     }
+    return {
+      x: canvas.width / 2 + 1.5 * s * x,
+      y: canvas.height * 0.8 - s * z + s * 10
+    };
 }
 
 function animate() {
     ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    if(rotate) angle += 0.005;
-    else angle = 0;
+    if (rotate) angle += 0.005;
 
     members.forEach((m, idx) => {
         lorenzStep(m);
 
         ctx.beginPath();
-        m.tail.forEach((pos, i) => {
-            const p = project(pos.x, pos.y, pos.z);
-            if(i===0) ctx.moveTo(p.x,p.y);
-            else ctx.lineTo(p.x,p.y);
+        m.tail.forEach((p, i) => {
+            const q = project(p.x, p.y, p.z);
+            if (i === 0) ctx.moveTo(q.x, q.y);
+            else ctx.lineTo(q.x, q.y);
         });
+
         ctx.strokeStyle = `hsl(${(idx/numMembers)*360}, 100%, 50%)`;
         ctx.lineWidth = 2;
         ctx.stroke();
@@ -184,8 +240,32 @@ function animate() {
 
     requestAnimationFrame(animate);
 }
-
 animate();
+</script>
+
+<!-- Load shared header.html and wire up dropdown -->
+<script>
+fetch("/assets/html/header.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("header-container").innerHTML = html;
+
+    const toggle = document.getElementById("dropdownToggle");
+    const menu = document.getElementById("dropdownMenu");
+
+    if (toggle && menu) {
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target) && e.target !== toggle) {
+          menu.style.display = "none";
+        }
+      });
+    }
+  });
 </script>
 
 </body>

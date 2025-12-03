@@ -28,7 +28,7 @@ Find me on [Google Scholar](https://scholar.google.com/citations?user=yYNEUSIAAA
 - Further interest in developing explainable AI in Earth system science, interrogating the "black-box" nature of machine learning approaches to extract physical insight from data-driven models and strengthen the link between predictive performance and scientific understanding.
 
 
-#### Explainable AI for Weather and Climate (in collaboration with the Met Office)
+#### Explainable AI for Weather and Climate (in collaboration with the Met Office, 2025)
 _Weather and climate systems are inherently complex, dynamic, and nonlinear, posing significant challenges for the development of trustworthy artificial intelligence methods. In response, a collaborative project between the University of Reading and the UK Met Office is advancing research into explainable AI (XAI) specifically tailored to the study of the complex, sometimes chaotic, systems within Earth system science. The project investigates how XAI can be applied to regression problems in meteorology, aiming to make machine learning models more interpretable and scientifically grounded. Through a comprehensive review of current XAI approaches and targeted experiments, the team seeks to identify and test methods that can effectively explain AI predictions in the context of evolving physical systems. By bridging data science, atmospheric science, and dynamical systems theory, the project is helping to unlock the potential of AI to provide new physical insights, improve predictive understanding, and support more informed decision-making in weather and climate applications, paving the way for more transparent, reliable, and actionable Earth system science._
 
 
@@ -43,9 +43,9 @@ _Can be found here: [https://github.com/ichiggs/Met-Python-Induction-2025](https
 
 
 #### Demonstrator Roles
-[Programming in Python for Data Science (2023)](https://www.reading.ac.uk/modules/documents?acyear=2022%252f3&modcode=CS2PP22&schoolcode=MPS%7CMPS%20CS%7CMPS%20MATHST%7CMPS%20MATHST%20S%7CMPS%20MET).
+[Programming in Python for Data Science (2023)](https://www.reading.ac.uk/modules/documents?acyear=2022%252f3&modcode=CS2PP22&schoolcode=MPS%7CMPS%20CS%7CMPS%20MATHST%7CMPS%20MATHST%20S%7CMPS%20MET), University of Reading, Computer Science Dept.
 
-[Programming in C/C++ (2022)](https://www.reading.ac.uk/modules/document.aspx?modP=CS1PC20&modYR=2021).
+Programming in C/C++ (2022), University of Reading, Computer Science Dept.
 
 # Previous Experience
 

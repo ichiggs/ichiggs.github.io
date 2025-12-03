@@ -16,9 +16,9 @@
 title: Dr Ieuan Higgs
 email: i.c.higgs@reading.ac.uk
 description: >- # this means to ignore newlines until "baseurl:"
-  Welcome to the homepage for Dr Ieuan Higgs, who currently works as 
+  Welcome to a webpage for Dr Ieuan Higgs, who currently works as 
   a lecturer and researcher in the University of Reading Computer Science Department. 
-  My research interests include: machine learning, data assimilation and explainable AI, 
+  Research interests include: machine learning, data assimilation and explainable AI, 
   with a focus on their application to Earth systems.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
