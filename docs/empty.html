@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dr. Ieuan Higgs – [Page Title]</title>
+
+  <!-- Import shared site-wide styles -->
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Optional: header-specific styles -->
+  <link rel="stylesheet" href="/assets/css/header.css">
+
+  <!-- Page-specific styling -->
+  <style>
+    /* Page content layout */
+    .page {
+      position: absolute;
+      inset: var(--header-h) 0 0 0; /* space below header */
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      overflow: auto;
+    }
+
+    /* Example content container */
+    .content {
+      flex: 1;
+      max-width: 1200px;
+      /* Add your page-specific styles here */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header imported dynamically -->
+  <div id="header-container"></div>
+
+  <!-- Page content -->
+  <div class="page">
+    <div class="content">
+      <!-- ======================== -->
+      <!-- Your page content goes here -->
+      <!-- ======================== -->
+    </div>
+  </div>
+
+  <!-- Import shared header dynamically -->
+  <script>
+    fetch('/assets/html/header.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('header-container').innerHTML = html;
+
+        // Re-attach dropdown behavior
+        const toggle = document.getElementById('dropdownToggle');
+        const menu = document.getElementById('dropdownMenu');
+        if(toggle && menu){
+          toggle.addEventListener('click', e => {
+            e.stopPropagation();
+            menu.style.display = (menu.style.display==='block')?'none':'block';
+          });
+          document.addEventListener('click', () => menu.style.display='none');
+          document.addEventListener('keydown', e => { if(e.key==='Escape') menu.style.display='none'; });
+        }
+      });
+  </script>
+
+  <!-- ======================== -->
+  <!-- Add page-specific scripts here -->
+  <!-- ======================== -->
+</body>
+</html>
