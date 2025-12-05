@@ -7,38 +7,60 @@
 
   <!-- Import shared site-wide styles -->
   <link rel="stylesheet" href="/style.css">
-
-  <!-- Header styles (same as homepage header) -->
   <link rel="stylesheet" href="/assets/css/header.css">
-
 
   <!-- Page-specific styling -->
   <style>
-    /* Page content layout */
     .page {
-      position:absolute;
+      position: absolute;
       inset: var(--header-h) 0 0 0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap: 2rem;
-      overflow:hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      overflow: hidden;
+      padding: 2rem;
     }
 
-    .globe-wrap{
+    .globe-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .globe-wrap {
       pointer-events:auto;
-      flex:1;
-      min-width:300px;
-      max-width:800px;
+      width: 100%;
+      max-width: 1000px;
       aspect-ratio:1/1;
       display:flex;
       align-items:center;
       justify-content:center;
-      position:relative;
-      padding:12px;
+      position: relative;
+      padding: 12px;
     }
 
-    #globe{
+    .globe-heading {
+      position:absolute;
+      pointer-events:none;
+      max-width:260px;
+      padding:12px 16px;
+      border-radius:16px;
+      font-size:24px;
+      line-height:1.3;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(6px);
+      box-shadow:0 6px 20px rgba(2,6,23,0.6);
+      color:#e9f1ff;
+      z-index:30;
+      text-align: center;
+    }
+
+    #globe {
       width:100%;
       height:100%;
       display:block;
@@ -46,8 +68,7 @@
       background: radial-gradient(circle at 40% 30%, rgba(255,255,255,0.01), transparent 20%);
     }
 
-    /* Floating bubbles */
-    .bubble{
+    .bubble {
       position:absolute;
       pointer-events:none;
       max-width:260px;
@@ -64,42 +85,50 @@
       z-index:30;
       text-align: center;
     }
-    @keyframes floaty{
+
+    @keyframes floaty {
       0%{ transform:translateY(0) scale(1);}
       50%{ transform:translateY(-8px) scale(1.01);}
       100%{ transform:translateY(0) scale(1);}
     }
-    .bubble1{ top:8%; left:6%; animation-delay:0s;}
-    .bubble2{ bottom:12%; left:4%; animation-delay:1.1s;}
-    .bubble3{ top:10%; right:6%; animation-delay:0.6s;}
+
+    .bubble1{ top:28%; left:15%; animation-delay:0s;}
+    .bubble2{ top:70%; left:20%; animation-delay:1.1s;}
+    .bubble3{ top:28%; right:15%; animation-delay:0.6s;}
+    .bubble4{ top:70%; right:20%; animation-delay:1.5s;}
+    .globe-heading{ top:15%; animation-delay:0.6s;}
   </style>
 </head>
-
-
 
 <body>
   <!-- Header imported dynamically -->
   <div id="header-container"></div>
 
-
   
+
   <!-- Page content -->
   <div class="page">
-    <div class="globe-wrap" id="globe-wrap">
-      <svg id="globe" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet"></svg>
-    </div>
+    <div class="globe-container">
 
-    <!-- Bubbles -->
-    <div class="bubble bubble1">Using AI to improve Earth system prediction</div>
-    <div class="bubble bubble2">Combining data assimilation with machine learning</div>
-    <div class="bubble bubble3">Building trust in AI with explainability methods</div>
+      
+
+      <div class="globe-wrap" id="globe-wrap">
+        <svg id="globe" viewBox="0 0 1960 1960" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <div class="globe-heading">Research Interests</div>
+
+      <!-- Bubbles -->
+      <div class="bubble bubble1">Using AI to improve Earth system prediction</div>
+      <div class="bubble bubble2">Combining data assimilation with machine learning</div>
+      <div class="bubble bubble3">Building trust in AI with explainability methods</div>
+      <div class="bubble bubble4">Marine Biogeochemistry and Urban Meteorology</div>
+    </div>
   </div>
 
   <!-- Import D3 + topojson -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>
-
-
 
   <!-- Import shared header -->
   <script>
@@ -107,8 +136,6 @@
       .then(res => res.text())
       .then(html => {
         document.getElementById('header-container').innerHTML = html;
-
-        // Re-attach dropdown behavior
         const toggle = document.getElementById('dropdownToggle');
         const menu = document.getElementById('dropdownMenu');
         if(toggle && menu){
@@ -122,26 +149,25 @@
       });
   </script>
 
-
-
-  <!-- Globe script -->
+  <!-- Globe + 3D orbiting image script -->
   <script>
-    const viewBoxSize = 960;
+    const viewBoxSize_h = 1960;
+    const viewBoxSize_w = 1960;
     const svg = d3.select('#globe')
-      .attr('viewBox', `0 0 ${viewBoxSize} ${viewBoxSize}`)
+      .attr('viewBox', `0 0 ${viewBoxSize_w} ${viewBoxSize_h}`)
       .attr('preserveAspectRatio', 'xMidYMid meet');
 
     let projection = d3.geoOrthographic()
-      .scale((viewBoxSize / 2) - 20)
-      .translate([viewBoxSize / 2, viewBoxSize / 2])
+      .scale((viewBoxSize_w / 2) - 20)
+      .translate([viewBoxSize_w / 2, viewBoxSize_h / 2])
       .clipAngle(90);
 
     let path = d3.geoPath(projection);
     const g = svg.append('g');
 
     const globeCircle = g.append('circle')
-      .attr('cx', viewBoxSize / 2)
-      .attr('cy', viewBoxSize / 2)
+      .attr('cx', viewBoxSize_w / 2)
+      .attr('cy', viewBoxSize_h / 2)
       .attr('r', projection.scale())
       .attr('fill', '#092e6e');
 
@@ -209,14 +235,59 @@
     function resize(){
       const wrap=document.getElementById('globe-wrap'), rect=wrap.getBoundingClientRect();
       const s=Math.min(rect.width,rect.height)/2-10;
-      projection.scale(s).translate([viewBoxSize/2, viewBoxSize/2]);
-      globeCircle.attr('cx',viewBoxSize/2).attr('cy',viewBoxSize/2).attr('r',s);
+      projection.scale(s).translate([viewBoxSize_w/2, viewBoxSize_h/2]);
+      globeCircle.attr('cx',viewBoxSize_w/2).attr('cy',viewBoxSize_h/2).attr('r',s);
       path=d3.geoPath(projection); svg.selectAll('path').attr('d',path);
     }
     const observer=new ResizeObserver(resize);
     observer.observe(document.getElementById('globe-wrap'));
     window.addEventListener('resize', resize);
     setTimeout(resize,50);
+
+    // --- Orbiting profile image in 3D ---
+    const orbitRadius = projection.scale() - 70; 
+    const imgSize = 90;
+
+    const orbitImage = svg.append("image")
+      .attr("href", "assets/img/ieuan_higgs_photo_close.png")
+      .attr("width", imgSize)
+      .attr("height", imgSize)
+      .attr("x", viewBoxSize_w/2 - imgSize/2)
+      .attr("y", viewBoxSize_h/2 - orbitRadius - imgSize/2)
+      .attr("clip-path","circle(50%)");
+
+    let orbitAngle = 0;
+
+    function animateOrbit3D(){
+      orbitAngle -= 0.2; // speed
+      const rad = orbitAngle * Math.PI / 180;
+
+      // 3D orbit around globe
+      const x = viewBoxSize_w/2 + orbitRadius * Math.cos(rad);
+      const z = orbitRadius * Math.sin(rad); // depth
+      const y = viewBoxSize_h/2 + z * 0.3; // perspective squash
+
+      // scale smaller when behind
+      const scale = (1 + z / (orbitRadius*4))*2;
+      const size = imgSize * scale;
+
+      orbitImage
+        .attr("x", x - size/2)
+        .attr("y", y - size/2)
+        .attr("width", size)
+        .attr("height", size);
+
+      // layer behind if behind globe
+      if(z < 0){
+        orbitImage.lower();
+      } else {
+        orbitImage.raise();
+      }
+
+      requestAnimationFrame(animateOrbit3D);
+    }
+
+    animateOrbit3D();
   </script>
 </body>
 </html>
