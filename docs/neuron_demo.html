@@ -486,5 +486,32 @@
   buildChart();
   update();
 </script>
+
+
+<!-- Load shared header.html and wire up dropdown -->
+<script>
+fetch("/assets/html/header.html")
+  .then(r => r.text())
+  .then(html => {
+    document.getElementById("header-container").innerHTML = html;
+
+    const toggle = document.getElementById("dropdownToggle");
+    const menu = document.getElementById("dropdownMenu");
+
+    if (toggle && menu) {
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menu.style.display = (menu.style.display === "block") ? "none" : "block";
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!menu.contains(e.target) && e.target !== toggle) {
+          menu.style.display = "none";
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
