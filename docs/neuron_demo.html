@@ -12,7 +12,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --bg: #f5f4f0;
@@ -60,6 +60,12 @@
     color: var(--text);
     min-height: 100vh;
     padding: 2rem 1rem;
+  } */
+
+  /* Make sure content starts below fixed header */
+  .page-content {
+    padding-top: var(--header-h);
+    width: 100%;
   }
 
   h1 {
